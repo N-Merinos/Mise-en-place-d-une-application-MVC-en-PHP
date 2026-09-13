@@ -112,12 +112,97 @@ class TrajetController
 
     public function edit(int $id): void
     {
-        // TODO : même schéma que create(), + vérifier auteur === user courant
+        Auth::requireLogin();
+
+        $trajet = $this->trajetRepository->findById($id);
+
+        if (!$trajet) {
+            $_SESSION['flash'] = ['type' => 'danger', 'message' => "Ce trajet n'existe pas."];
+            header('Location: /');
+            exit;
+        }
+
+        if ($trajet->auteurId !== Auth::user()['id']) {
+            $_SESSION['flash'] = ['type' => 'danger', 'message' => 'Vous ne pouvez modifier que vos propres trajets.'];
+            header('Location: /');
+            exit;
+        }
+
+        $agences = $this->agenceRepository->findAll();
+        $user = Auth::user();
+        $errors = $_SESSION['form_errors'] ?? [];
+
+        // Pré-remplissage : soit les valeurs re-soumises après une erreur,
+        // soit les valeurs actuelles du trajet au format attendu par le formulaire.
+        $old = $_SESSION['form_old'] ?? [
+            'agence_depart_id'   => $trajet->agenceDepartId,
+            'agence_arrivee_id'  => $trajet->agenceArriveeId,
+            'date_heure_depart'  => str_replace(' ', 'T', substr($trajet->dateHeureDepart, 0, 16)),
+            'date_heure_arrivee' => str_replace(' ', 'T', substr($trajet->dateHeureArrivee, 0, 16)),
+            'nb_places_total'    => $trajet->nbPlacesTotal,
+        ];
+        unset($_SESSION['form_errors'], $_SESSION['form_old']);
+
+        require __DIR__ . '/../../views/trajet/edit.php';
     }
 
     public function update(int $id): void
     {
-        // TODO : même schéma que store(), + vérifier auteur === user courant
+        Auth::requireLogin();
+
+        $trajet = $this->trajetRepository->findById($id);
+
+        if (!$trajet) {
+            $_SESSION['flash'] = ['type' => 'danger', 'message' => "Ce trajet n'existe pas."];
+            header('Location: /');
+            exit;
+        }
+
+        if ($trajet->auteurId !== Auth::user()['id']) {
+            $_SESSION['flash'] = ['type' => 'danger', 'message' => 'Vous ne pouvez modifier que vos propres trajets.'];
+            header('Location: /');
+            exit;
+        }
+
+        $data = [
+            'agenceDepartId'   => (int) ($_POST['agence_depart_id'] ?? 0),
+            'agenceArriveeId'  => (int) ($_POST['agence_arrivee_id'] ?? 0),
+            'dateHeureDepart'  => $_POST['date_heure_depart'] ?? '',
+            'dateHeureArrivee' => $_POST['date_heure_arrivee'] ?? '',
+            'nbPlacesTotal'    => (int) ($_POST['nb_places_total'] ?? 0),
+        ];
+
+        $errors = $this->validate($data);
+
+        // Le nombre de places ne peut pas descendre sous le nombre de places
+        // déjà réservées (places_total - places_dispo = places déjà prises).
+        $placesPrises = $trajet->nbPlacesTotal - $trajet->nbPlacesDispo;
+        if ($data['nbPlacesTotal'] < $placesPrises) {
+            $errors[] = "Le nombre de places ne peut pas être inférieur aux $placesPrises déjà réservées.";
+        }
+
+        if (!empty($errors)) {
+            $_SESSION['form_errors'] = $errors;
+            $_SESSION['form_old'] = $_POST;
+            header("Location: /trajet/$id/modifier");
+            exit;
+        }
+
+        // Le nombre de places disponibles suit l'écart appliqué au total.
+        $nouvellesPlacesDispo = $data['nbPlacesTotal'] - $placesPrises;
+
+        $this->trajetRepository->update($id, [
+            'agenceDepartId'   => $data['agenceDepartId'],
+            'agenceArriveeId'  => $data['agenceArriveeId'],
+            'dateHeureDepart'  => $data['dateHeureDepart'],
+            'dateHeureArrivee' => $data['dateHeureArrivee'],
+            'nbPlacesTotal'    => $data['nbPlacesTotal'],
+            'nbPlacesDispo'    => $nouvellesPlacesDispo,
+        ]);
+
+        $_SESSION['flash'] = ['type' => 'success', 'message' => 'Le trajet a bien été modifié.'];
+        header('Location: /');
+        exit;
     }
 
     public function delete(int $id): void

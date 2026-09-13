@@ -107,4 +107,32 @@ class TrajetRepository
         $stmt = $this->pdo->prepare('DELETE FROM trajet WHERE id = :id');
         return $stmt->execute(['id' => $id]);
     }
+
+    /**
+     * Met à jour un trajet existant.
+     */
+    public function update(int $id, array $data): bool
+    {
+        $sql = "
+            UPDATE trajet SET
+                agence_depart_id   = :agence_depart_id,
+                agence_arrivee_id  = :agence_arrivee_id,
+                date_heure_depart  = :date_heure_depart,
+                date_heure_arrivee = :date_heure_arrivee,
+                nb_places_total    = :nb_places_total,
+                nb_places_dispo    = :nb_places_dispo
+            WHERE id = :id
+        ";
+
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            'agence_depart_id'   => $data['agenceDepartId'],
+            'agence_arrivee_id'  => $data['agenceArriveeId'],
+            'date_heure_depart'  => $data['dateHeureDepart'],
+            'date_heure_arrivee' => $data['dateHeureArrivee'],
+            'nb_places_total'    => $data['nbPlacesTotal'],
+            'nb_places_dispo'    => $data['nbPlacesDispo'],
+            'id'                 => $id,
+        ]);
+    }
 }
