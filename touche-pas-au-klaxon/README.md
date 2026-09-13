@@ -24,7 +24,7 @@ Application de covoiturage inter-sites — DWWM, CEF.
 - [x] Page d'accueil (liste des trajets disponibles)
 - [x] Authentification (connexion / déconnexion)
 - [x] Création / modification / suppression de trajet
-- [ ] Tableau de bord admin (agences, utilisateurs, trajets)
+- [x] Tableau de bord admin (agences, utilisateurs, trajets)
 - [ ] Tests PHPUnit
 - [ ] Compilation Sass + palette de couleurs imposée
 - [ ] Vérification PHPStan
