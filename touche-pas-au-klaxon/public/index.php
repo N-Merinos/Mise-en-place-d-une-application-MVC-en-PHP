@@ -8,7 +8,7 @@ use App\Controller\HomeController;
 use App\Controller\AuthController;
 use App\Controller\TrajetController;
 use App\Controller\AdminController;
-use BukaKit\Router\Router;
+use App\Core\Router;
 
 $router = new Router();
 
