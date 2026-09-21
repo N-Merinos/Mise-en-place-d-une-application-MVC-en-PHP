@@ -1,0 +1,35 @@
+// ---------------------------------------------------------------------
+// Palette imposée par le brief (section 2 - Contraintes)
+// Ces valeurs sont fixes ; les prochains sites du Comité d'entreprise
+// réutiliseront ce même système de variables avec leur propre palette.
+// ---------------------------------------------------------------------
+$klaxon-pale-blue:  #f1f8fc; // fond clair / éléments discrets
+$klaxon-blue:        #0074c7; // couleur principale
+$klaxon-dark-blue:  #00497c; // accents foncés
+$klaxon-slate:        #384050; // texte / éléments secondaires
+$klaxon-red:          #cd2c2e; // erreurs, suppression
+$klaxon-green:        #82b864; // succès, disponibilité
+
+// ---------------------------------------------------------------------
+// Surcharge des variables Bootstrap AVANT l'import de Bootstrap.
+// C'est ce qui permet aux futurs sites du Comité d'entreprise de garder
+// la même structure et de ne changer que ce fichier.
+// ---------------------------------------------------------------------
+$primary:    $klaxon-blue;
+$secondary:  $klaxon-slate;
+$success:    $klaxon-green;
+$danger:     $klaxon-red;
+$light:      $klaxon-pale-blue;
+$dark:       $klaxon-dark-blue;
+
+$theme-colors: (
+    "primary":    $primary,
+    "secondary":  $secondary,
+    "success":    $success,
+    "danger":     $danger,
+    "light":      $light,
+    "dark":       $dark,
+);
+
+$link-color: $primary;
+$body-color: $klaxon-slate;

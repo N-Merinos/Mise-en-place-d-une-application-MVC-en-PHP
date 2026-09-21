@@ -1,0 +1,5 @@
+/vendor/
+/node_modules/
+/public/assets/css/
+config/config.local.php
+.env
