@@ -1,0 +1,20 @@
+// Variables du projet (doit être importé AVANT bootstrap pour surcharger
+// ses valeurs par défaut).
+@import "variables";
+
+// Bootstrap complet, construit avec notre palette.
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+
+// ---------------------------------------------------------------------
+// Styles spécifiques à l'application, au-delà de ce que Bootstrap
+// couvre déjà.
+// ---------------------------------------------------------------------
+header {
+    border-bottom: 1px solid $klaxon-pale-blue;
+    background-color: $white;
+}
+
+footer {
+    color: $klaxon-slate;
+    font-size: $small-font-size;
+}

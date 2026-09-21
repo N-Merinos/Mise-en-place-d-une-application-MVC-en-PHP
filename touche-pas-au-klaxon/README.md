@@ -8,8 +8,11 @@ Application de covoiturage inter-sites — DWWM, CEF.
 2. Créer la base : `mysql -u root -p < database/schema.sql`
 3. Charger le jeu de données : `mysql -u root -p < database/seed.sql`
 4. Copier `config/config.php` et adapter les identifiants MySQL
-5. Lancer le serveur local : `php -S localhost:8000 -t public`
-6. Ouvrir `http://localhost:8000`
+5. `npm install` puis `npm run build:css` (compile le Sass avec la palette imposée dans `public/assets/css/main.css`)
+6. Lancer le serveur local : `php -S localhost:8000 -t public`
+7. Ouvrir `http://localhost:8000`
+
+En développement, `npm run watch:css` recompile automatiquement à chaque modification des fichiers `.scss`.
 
 ## Comptes de test
 
@@ -26,7 +29,7 @@ Application de covoiturage inter-sites — DWWM, CEF.
 - [ ] Création / modification / suppression de trajet
 - [ ] Tableau de bord admin (agences, utilisateurs, trajets)
 - [ ] Tests PHPUnit
-- [ ] Compilation Sass + palette de couleurs imposée
+- [x] Compilation Sass + palette de couleurs imposée
 - [ ] Vérification PHPStan
 
 ## Architecture
