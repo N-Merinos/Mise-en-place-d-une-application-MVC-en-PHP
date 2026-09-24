@@ -86,7 +86,7 @@ class TrajetRepository
                  date_heure_arrivee, nb_places_total, nb_places_dispo, auteur_id)
             VALUES
                 (:agence_depart_id, :agence_arrivee_id, :date_heure_depart,
-                 :date_heure_arrivee, :nb_places_total, :nb_places_total, :auteur_id)
+                 :date_heure_arrivee, :nb_places_total, :nb_places_dispo, :auteur_id)
         ";
 
         $stmt = $this->pdo->prepare($sql);
@@ -96,6 +96,8 @@ class TrajetRepository
             'date_heure_depart'  => $data['dateHeureDepart'],
             'date_heure_arrivee' => $data['dateHeureArrivee'],
             'nb_places_total'    => $data['nbPlacesTotal'],
+            // À la création, toutes les places sont disponibles.
+            'nb_places_dispo'    => $data['nbPlacesTotal'],
             'auteur_id'          => $data['auteurId'],
         ]);
 
