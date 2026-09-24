@@ -1,0 +1,12 @@
+parameters:
+    level: 6
+    paths:
+        - src
+        - public
+
+    # Les vues (views/) sont volontairement exclues : ce sont des templates
+    # PHP mêlant HTML et variables injectées par les contrôleurs (via `require`),
+    # pas du code orienté objet analysable statiquement de façon utile ici.
+
+    excludePaths:
+        - vendor/*

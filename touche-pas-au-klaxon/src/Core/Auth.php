@@ -18,6 +18,9 @@ class Auth
         return self::isLoggedIn() && $_SESSION['user']['role'] === 'admin';
     }
 
+    /**
+     * @return array{id: int, nom: string, prenom: string, email: string, role: string}|null
+     */
     public static function user(): ?array
     {
         return $_SESSION['user'] ?? null;
