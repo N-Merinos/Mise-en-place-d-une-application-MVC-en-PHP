@@ -21,6 +21,15 @@ En développement, `npm run watch:css` recompile automatiquement à chaque modif
 | Admin   | admin@klaxon.fr     | password123  |
 | Employé | julie.dupont@klaxon.fr | password123 |
 
+## Tests
+
+Les tests couvrent les opérations d'écriture (création, modification, suppression de trajets et d'agences), dans une base séparée pour ne jamais toucher aux données réelles.
+
+1. Créer la base de test : `mysql -u root -p < database/schema-test.sql`
+2. Lancer les tests : `vendor/bin/phpunit`
+
+Chaque test s'exécute dans une transaction annulée à la fin (rollback), donc la base de test reste toujours vide entre deux exécutions — pas besoin de la recréer à chaque fois.
+
 ## État actuel
 
 - [x] Connexion à la base (PDO singleton)
@@ -28,7 +37,7 @@ En développement, `npm run watch:css` recompile automatiquement à chaque modif
 - [x] Authentification (connexion / déconnexion)
 - [x] Création / modification / suppression de trajet
 - [x] Tableau de bord admin (agences, utilisateurs, trajets)
-- [ ] Tests PHPUnit
+- [x] Tests PHPUnit
 - [x] Compilation Sass + palette de couleurs imposée
 - [ ] Vérification PHPStan
 

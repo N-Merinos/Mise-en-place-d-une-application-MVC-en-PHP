@@ -20,7 +20,11 @@ class Database
     public static function getInstance(): PDO
     {
         if (self::$instance === null) {
-            $config = require __DIR__ . '/../../config/config.php';
+            $configFile = (getenv('APP_ENV') === 'testing')
+                ? __DIR__ . '/../../config/config.testing.php'
+                : __DIR__ . '/../../config/config.php';
+
+            $config = require $configFile;
             $db = $config['db'];
 
             $dsn = sprintf(
@@ -38,6 +42,15 @@ class Database
         }
 
         return self::$instance;
+    }
+
+    /**
+     * Réinitialise la connexion mémorisée. Utile uniquement pour les tests,
+     * qui peuvent avoir besoin de changer de configuration entre deux suites.
+     */
+    public static function reset(): void
+    {
+        self::$instance = null;
     }
 
     private function __construct()
