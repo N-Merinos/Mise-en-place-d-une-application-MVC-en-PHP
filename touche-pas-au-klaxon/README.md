@@ -27,8 +27,9 @@ pour développer et tester ce projet.
 3. Copier `config/config.php` et adapter les identifiants MySQL si besoin
    (par défaut : `root` sans mot de passe, ce qui correspond à l'installation
    par défaut de Laragon)
-4. `npm install` puis `npm run build:css` (compile le Sass avec la palette
-   imposée dans `public/assets/css/main.css`)
+4. `npm install` puis `npm run build` (compile le Sass avec la palette
+   imposée dans `public/assets/css/main.css`, et copie le JS de Bootstrap
+   nécessaire aux fenêtres modales dans `public/assets/js/`)
 5. Lancer le serveur local, **depuis le dossier du projet** :
    `php -S localhost:8000 -t public`
 6. Ouvrir `http://localhost:8000`
@@ -37,10 +38,12 @@ En développement, `npm run watch:css` recompile automatiquement à chaque modif
 
 ## Comptes de test
 
+Le mot de passe `password123` est appliqué à tous les employés (l'annexe RH ne fournissant pas de mot de passe). Le compte admin n'est pas issu de l'annexe (aucun employé n'y est désigné comme tel) : il est ajouté séparément dans `seed.sql`.
+
 | Rôle    | Email               | Mot de passe |
 |---------|---------------------|--------------|
 | Admin   | admin@klaxon.fr     | password123  |
-| Employé | julie.dupont@klaxon.fr | password123 |
+| Employé | alexandre.martin@email.fr | password123 |
 
 ## État actuel
 
