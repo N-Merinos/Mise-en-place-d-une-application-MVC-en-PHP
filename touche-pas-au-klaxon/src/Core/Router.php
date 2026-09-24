@@ -16,16 +16,25 @@ class Router
     /** @var array<string, array<string, array{0: class-string, 1: string}>> */
     private array $routes = [];
 
+    /**
+     * @param array{0: class-string, 1: string} $handler
+     */
     public function get(string $path, array $handler): void
     {
         $this->add('GET', $path, $handler);
     }
 
+    /**
+     * @param array{0: class-string, 1: string} $handler
+     */
     public function post(string $path, array $handler): void
     {
         $this->add('POST', $path, $handler);
     }
 
+    /**
+     * @param array{0: class-string, 1: string} $handler
+     */
     private function add(string $method, string $path, array $handler): void
     {
         $this->routes[$method][$path] = $handler;

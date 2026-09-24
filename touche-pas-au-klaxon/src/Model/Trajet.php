@@ -25,6 +25,9 @@ class Trajet
     public ?string $auteurEmail = null;
     public ?string $auteurTelephone = null;
 
+    /**
+     * @param array<string, mixed> $row
+     */
     public static function fromArray(array $row): self
     {
         $trajet = new self();

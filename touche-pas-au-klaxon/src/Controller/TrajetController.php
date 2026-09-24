@@ -77,6 +77,7 @@ class TrajetController
      * Contrôles de cohérence exigés par le brief :
      * agences différentes, arrivée après le départ, places > 0.
      *
+     * @param array<string, mixed> $data
      * @return string[] Liste des messages d'erreur (vide si le formulaire est valide).
      */
     private function validate(array $data): array

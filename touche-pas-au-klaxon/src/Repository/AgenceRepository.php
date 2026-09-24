@@ -25,6 +25,9 @@ class AgenceRepository
         return $stmt->fetchAll();
     }
 
+    /**
+     * @return array{id: int, nom: string}|null
+     */
     public function findById(int $id): ?array
     {
         $stmt = $this->pdo->prepare('SELECT id, nom FROM agence WHERE id = :id');
