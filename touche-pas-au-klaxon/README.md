@@ -21,9 +21,16 @@ pour développer et tester ce projet.
    mysql -u root < database/schema.sql
    mysql -u root < database/seed.sql
    ```
-   (sous PowerShell, remplacer `mysql -u root < fichier.sql` par
-   `Get-Content fichier.sql | mysql -u root` — PowerShell ne supporte pas `<`
-   pour rediriger un fichier ; le terminal Laragon, lui, l'accepte directement)
+   **Sous PowerShell**, `<` n'est pas supporté pour rediriger un fichier, et
+   `Get-Content | mysql` corrompt les caractères accentués (encodage par
+   défaut de PowerShell différent d'UTF-8). Utiliser à la place :
+   ```
+   cmd /c "mysql -u root --default-character-set=utf8mb4 < database\schema.sql"
+   cmd /c "mysql -u root --default-character-set=utf8mb4 < database\seed.sql"
+   ```
+   (délègue la redirection à `cmd.exe`, qui transfère le fichier tel quel,
+   sans repasser par l'encodage texte de PowerShell — le terminal intégré
+   de Laragon, qui est déjà un `cmd`, accepte directement la première forme)
 3. Copier `config/config.php` et adapter les identifiants MySQL si besoin
    (par défaut : `root` sans mot de passe, ce qui correspond à l'installation
    par défaut de Laragon)
@@ -35,6 +42,20 @@ pour développer et tester ce projet.
 6. Ouvrir `http://localhost:8000`
 
 En développement, `npm run watch:css` recompile automatiquement à chaque modification des fichiers `.scss`.
+
+## Tests et qualité de code
+
+Les tests couvrent les opérations d'écriture (création, modification, suppression de trajets et d'agences), dans une base séparée pour ne jamais toucher aux données réelles.
+
+1. Créer la base de test :
+   ```
+   mysql -u root < database/schema-test.sql
+   ```
+   (sous PowerShell : `cmd /c "mysql -u root --default-character-set=utf8mb4 < database\schema-test.sql"`, voir la remarque sur l'encodage ci-dessus)
+2. Lancer les tests : `vendor\bin\phpunit`
+3. Analyse statique : `vendor\bin\phpstan analyse`
+
+Chaque test s'exécute dans une transaction annulée à la fin (rollback), donc la base de test reste toujours vide entre deux exécutions.
 
 ## Comptes de test
 
