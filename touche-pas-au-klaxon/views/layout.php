@@ -11,9 +11,10 @@
         <?php if ($user && $user['role'] === 'admin'): ?>
             <a href="/admin" class="fw-bold text-decoration-none">Touche pas au klaxon</a>
             <nav class="d-flex align-items-center gap-3">
-                <a href="/admin/agences">Agences</a>
                 <a href="/admin/utilisateurs">Utilisateurs</a>
+                <a href="/admin/agences">Agences</a>
                 <a href="/admin/trajets">Trajets</a>
+                <span><?= htmlspecialchars($user['prenom'] . ' ' . $user['nom']) ?></span>
                 <a href="/deconnexion" class="btn btn-outline-secondary btn-sm">Déconnexion</a>
             </nav>
         <?php elseif ($user): ?>
@@ -36,5 +37,7 @@
     <footer class="text-center py-3">
         Touche pas au klaxon &copy; <?= date('Y') ?>
     </footer>
+
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

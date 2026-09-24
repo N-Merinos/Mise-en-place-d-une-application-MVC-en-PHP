@@ -3,7 +3,9 @@
     "private": true,
     "scripts": {
         "build:css": "sass public/assets/scss/main.scss public/assets/css/main.css --style=compressed --no-source-map",
-        "watch:css": "sass --watch public/assets/scss/main.scss:public/assets/css/main.css"
+        "watch:css": "sass --watch public/assets/scss/main.scss:public/assets/css/main.css",
+        "build:js": "node -e \"require('fs').mkdirSync('public/assets/js',{recursive:true});require('fs').copyFileSync('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js','public/assets/js/bootstrap.bundle.min.js')\"",
+        "build": "npm run build:css && npm run build:js"
     },
     "devDependencies": {
         "sass": "^1.77.0"
